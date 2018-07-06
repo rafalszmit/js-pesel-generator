@@ -1,6 +1,4 @@
 /.vscode/
 /node_modules/
-/spec/
 /lib/
 package-lock.json
-pesel_tests.js

@@ -84,5 +84,6 @@ function getValidDay(date){
     return day;
 }
 
-console.log("F: "+generatePesel(new Date("2101-03-25"),"F",123));
-console.log("M: "+generatePesel(new Date("1963-09-07"),"M",456));
+module.exports = generatePesel;
+//console.log("F: "+generatePesel(new Date("2101-03-25"),"F",123));
+//console.log("M: "+generatePesel(new Date("1963-09-07"),"M",456));
