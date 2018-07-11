@@ -1,89 +1,75 @@
-function generatePesel(date,sex,nr){
-
-var year=getValidYearInTwoDigits(date);
-var month=getValidMonth(date);
-var day=getValidDay(date);
-var sexDigit=getDigitForSex(sex);
-var pesel=""+year+month+day+nr+sexDigit;
-pesel+=getControlSum(pesel);
-
-return pesel;
+/*jslint es6 */
+function generatePesel(date, sex, nr) {
+    "use strict";
+    var year = fillZeros(getValidYearInTwoDigits(date));
+    var month = fillZeros(getValidMonth(date));
+    var day = fillZeros(date.getDate());
+    var genderDigit = getDigitForGender(sex);
+    var pesel = `${year}${month}${day}${nr}${genderDigit}`;
+    pesel += getControlSum(pesel);
+    return pesel;
 }
 
-function getValidMonth(date){
-    var fullYear=date.getFullYear();
-    var month=date.getMonth()+1;
+function fillZeros(value) {
+    "use strict";
+    if (value < 10) {
+        value = "0" + value;
+    }
+    return value;
+}
 
-    if (fullYear>=1800 && fullYear<=1899){
+function getValidMonth(date) {
+    "use strict";
+    var fullYear = date.getFullYear();
+    var month = date.getMonth() + 1;
+
+    if (fullYear >= 1800 && fullYear <= 1899) {
         month += 80;
     } else
-    if (fullYear>=2000 && fullYear<=2099){
-        month += 20;
-    } else
-    if (fullYear>=2100 && fullYear<=2199){
-        month += 40;
-    } else
-    if (fullYear>=2200 && fullYear<=2299){
-        month += 60;
-    }
-
-    if(month<10)
-    month="0"+month;
-
+        if (fullYear >= 2000 && fullYear <= 2099) {
+            month += 20;
+        } else
+            if (fullYear >= 2100 && fullYear <= 2199) {
+                month += 40;
+            } else
+                if (fullYear >= 2200 && fullYear <= 2299) {
+                    month += 60;
+                }
     return month;
 }
 
-function getValidYearInTwoDigits(date){
-    var fullYear=date.getFullYear();
-    var year=fullYear%100;
-
-    if(year<10)
-    year="0"+year;
-
-    return year; 
+function getValidYearInTwoDigits(date) {
+    "use strict";
+    var fullYear = date.getFullYear();
+    var year = fullYear % 100;
+    return year;
 }
 
-function getControlSum(notFullPesel){
-    var wagi = new Array (1, 3, 7, 9, 1, 3, 7, 9, 1, 3);
-    var controlSum=0;
-    var tmp=0;
-    for(var i=0;i<notFullPesel.length;i++){
-        tmp+=notFullPesel[i]*wagi[i];
-     }
-     controlSum=tmp%10;
-     return controlSum;
-}
-
-function getDigitForSex(sex){
-    var rand;
-
-    if(sex=="F"){
-        do {
-            rand = Math.floor(Math.random() * 10);
-        }
-        while (rand%2 != 0);
-        sex=rand;
+function getControlSum(notFullPesel) {
+    "use strict";
+    var wagi = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3];
+    var controlSum = 0;
+    var tmp = 0;
+    for (var i = 0; i < notFullPesel.length; i++) {
+        tmp += notFullPesel[i] * wagi[i];
     }
-    
-    if(sex=="M"){
-        do {
-            rand = Math.floor(Math.random() * 10);
-        }
-        while (rand%2 == 0);
-        sex=rand;
-    }
-    return sex;
+    controlSum = tmp % 10;
+    return controlSum;
 }
 
-function getValidDay(date){
-    var day=date.getDate();
+function getDigitForGender(genderDigit) {
+    var male = [0, 2, 4, 6, 8]
+    var female = [1, 3, 5, 7, 9]
 
-    if(day<10)
-    day="0"+day;
-
-    return day;
+    if (genderDigit == "F") {
+        genderDigit = female[Math.floor(Math.random() * female.length)]
+    }
+    if (genderDigit == "M") {
+        genderDigit = male[Math.floor(Math.random() * male.length)]
+    }
+    return genderDigit;
 }
 
 module.exports = generatePesel;
-//console.log("F: "+generatePesel(new Date("2101-03-25"),"F",123));
-//console.log("M: "+generatePesel(new Date("1963-09-07"),"M",456));
+//console.log("F: " + generatePesel(new Date("2101-03-25"), "F", 111));
+//console.log("M: " + generatePesel(new Date("1963-09-07"), "M", 999));

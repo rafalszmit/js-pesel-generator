@@ -1,4 +1,5 @@
 describe("Pesel generator", function () {
+    "use strict";
     var generatePesel = require('../app.js');
 
     it("should return female pesel", function () {
@@ -13,7 +14,7 @@ describe("Pesel generator", function () {
 
     it("should return pesel with valid control sum", function () {
         pesel = generatePesel(new Date("1963-09-07"), "F", 111);
-        var wagi = new Array(1, 3, 7, 9, 1, 3, 7, 9, 1, 3);
+        var wagi = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3];
         var controlSum = 0;
         for (var i = 0; i < pesel.length-1; i++) {
             controlSum += pesel[i] * wagi[i];
@@ -41,6 +42,4 @@ describe("Pesel generator", function () {
         pesel = generatePesel(new Date("2299-01-02"), "M",111);
         expect(pesel[2]).toBe('6');
     });
-
-    
 });
