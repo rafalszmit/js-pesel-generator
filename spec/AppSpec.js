@@ -7,10 +7,6 @@ describe("Pesel generator", function () {
 
     var generatePesel = require('../app.js');
 
-    function isEven(num) {
-        return num % 2 == 0;
-    }
-
     function getMonth(pesel) {
         return pesel.slice(2, 4);
     }
@@ -20,17 +16,17 @@ describe("Pesel generator", function () {
     }
 
     function getGenderDigit(pesel) {
-        return pesel.substr(-3);
+        return pesel.slice(9, 10);
     }
 
     it("should return female pesel", function () {
         let pesel = generatePesel(new Date("1963-09-07"), "F", 111);
-        expect(isEven(getGenderDigit(pesel))).toBeTruthy();
+        expect(parseInt(getGenderDigit(pesel))).toBeEvenNumber();
     });
 
     it("should return male pesel", function () {
         let pesel = generatePesel(new Date("1963-09-07"), "M", 111);
-        expect(isEven(getGenderDigit(pesel))).toBeFalsy();
+        expect(parseInt(getGenderDigit(pesel))).toBeOddNumber();
     });
 
     it("should return pesel with valid control sum", function () {

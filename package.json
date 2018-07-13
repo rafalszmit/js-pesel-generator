@@ -11,5 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "jasmine": "^3.1.0"
+  },
+  "devDependencies": {
+    "jasmine-expect": "^3.8.3"
   }
 }
