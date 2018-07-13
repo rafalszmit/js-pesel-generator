@@ -10,7 +10,6 @@
   "author": "rafi",
   "license": "ISC",
   "dependencies": {
-    "jasmine": "^3.1.0",
-    "jasmine-matchers": "^0.2.3"
+    "jasmine": "^3.1.0"
   }
 }
